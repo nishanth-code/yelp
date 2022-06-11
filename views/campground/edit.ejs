@@ -1,0 +1,49 @@
+
+<% layout('layout/boilerplate') %> 
+<body>
+
+    <div class="row">
+        <h1 class="text-center">Edit Campground</h1>
+        <div class="col-6 offset-3">
+        <form action="/allcamp/<%= c.id %>?_method=put" method="post">          
+        <div class="mb-3">
+              <label class="form-label" for="title">camp title</label>
+              <input class="form-control" type="text" id="title" name="campground[title]" value="<%= c.title %> ">
+          </div>
+          <div class="mb-3">
+              <label class="form-label" for="location">location</label>
+              <input class="form-control" type="text" id="location" name="campground[location]" value="<%= c.location %> ">
+  
+          </div>
+          <div class="mb-3">
+              <label class="form-label" for="image">image url</label>
+              <input class="form-control" type="text" id="image" name="campground[image]" value="<%= c.image %> ">
+          </div>
+          <div class="mb-3">
+              <label class="form-label" for="description">description</label>
+              <textarea class="form-control" type="text" id="description" name="campground[discreption]" ><%= c.discreption %> </textarea>
+          </div>
+          <div class="mb-3">
+              <label for="price">campground price</label>
+              <div class="input-group ">
+                  
+                  <span class="input-group-text">$</span>
+                  <input type="text" class="form-control" id="price" name="campground[price]" value="<%= c.price %> ">
+                  
+                </div>
+          </div>
+          <div class="btn-group">
+                      <input  class="btn btn-outline-danger" type="submit" value="update camp">
+
+          </div>
+          </form>
+          <div class="btn-group">
+              
+            <a href="/allcamp"> <input  class=" btn-outline-warning " type="submit" value="back"></a>
+
+          </div>
+        </div>
+    </div>
+    
+</body>
+</html>
