@@ -5,30 +5,36 @@
     <div class="row">
         <h1 class="text-center">Edit Campground</h1>
         <div class="col-6 offset-3">
-        <form action="/allcamp/<%= c.id %>?_method=put" method="post">          
+        <form action="/allcamp/<%= c.id %>?_method=put" method="post" class="validation" novalidate>          
         <div class="mb-3">
               <label class="form-label" for="title">camp title</label>
-              <input class="form-control" type="text" id="title" name="campground[title]" value="<%= c.title %> ">
+              <input class="form-control" type="text" id="title" name="campground[title]" value="<%= c.title %> " required>
+              <div class="valid-feedback">
+                looks good
+              </div>
+              <div class="invalid-feedback">
+                title required
+              </div>
           </div>
           <div class="mb-3">
               <label class="form-label" for="location">location</label>
-              <input class="form-control" type="text" id="location" name="campground[location]" value="<%= c.location %> ">
+              <input class="form-control" type="text" id="location" name="campground[location]" value="<%= c.location %> " required>
   
           </div>
           <div class="mb-3">
               <label class="form-label" for="image">image url</label>
-              <input class="form-control" type="text" id="image" name="campground[image]" value="<%= c.image %> ">
+              <input class="form-control" type="text" id="image" name="campground[image]" value="<%= c.image %> " required>
           </div>
           <div class="mb-3">
               <label class="form-label" for="description">description</label>
-              <textarea class="form-control" type="text" id="description" name="campground[discreption]" ><%= c.discreption %> </textarea>
+              <textarea class="form-control" type="text" id="description" name="campground[discreption]" required ><%= c.discreption %> </textarea>
           </div>
           <div class="mb-3">
               <label for="price">campground price</label>
               <div class="input-group ">
                   
                   <span class="input-group-text">$</span>
-                  <input type="text" class="form-control" id="price" name="campground[price]" value="<%= c.price %> ">
+                  <input type="text" class="form-control" id="price" name="campground[price]" value="<%= c.price %> " required>
                   
                 </div>
           </div>
@@ -45,5 +51,26 @@
         </div>
     </div>
     
+
+<script>
+    (() => {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+</script>
 </body>
 </html>
