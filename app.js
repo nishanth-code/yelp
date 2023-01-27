@@ -6,9 +6,9 @@ const ejsMate = require('ejs-mate')
 const methodOverride = require('method-override')
 const path = require('path')
 const camp = require('./models/campground');
-const AsyncHandler = require('./error handlers/asyncerror-handler')
+const AsyncHandler = require('./error_handlers/asyncerror-handler')
 const { findByIdAndDelete } = require('./models/campground');
-const ExpressError = require('./error handlers/expresserror');
+const ExpressError = require('./error_handlers/expresserror');
 const { title } = require('process');
 mongoose.connect('mongodb://localhost:27017/yelp',{
 useNewUrlParser: true,
