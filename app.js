@@ -2,15 +2,16 @@ const express = require('express');
 const  mongoose  = require('mongoose');
 const app = express();
 const Joi = require('joi')
+const { campvalidation } = require('./schemavalidations')
 const ejsMate = require('ejs-mate')
 const methodOverride = require('method-override')
 const path = require('path')
 const camp = require('./models/campground');
 const AsyncHandler = require('./error_handlers/asyncerror-handler')
-const { findByIdAndDelete } = require('./models/campground');
+const { findByIdAndDelete, schema } = require('./models/campground');
 const ExpressError = require('./error_handlers/expresserror');
 const { title } = require('process');
-mongoose.connect('mongodb://localhost:27017/yelp',{
+mongoose.connect('mongodb+srv://nishanth:nish1234@cluster0.bbodeek.mongodb.net/yelpCamps',{
 useNewUrlParser: true,
 useUnifiedTopology: true
 });
@@ -31,17 +32,8 @@ app.get('/',(req,res) =>{
 const schemaValidator = (req,res,next) =>
 {
     
-    const campschema = Joi.object({
-        campground:Joi.object({
-            title:Joi.string().required(),
-            price:Joi.number().required().min(10),
-            location:Joi.string().required(),
-            image:Joi.string().required(),
-            discreption:Joi.string().required()
-        }).required()
-        
-    })
-    const { error } = campschema.validate()
+   
+    const { error } = campvalidation.validate()
     if(error)
     {
         const msg = error.detail.map(el => el.message).join(',')
@@ -73,7 +65,7 @@ app.get('/allcamp/:id/edit', AsyncHandler(async(req,res,next) => {
     res.render('campground/edit', { c })
 
 }))
-app.put('/allcamp/:id' , AsyncHandler(async(req,res,next) => {
+app.put('/allcamp/:id' ,schemaValidator, AsyncHandler(async(req,res,next) => {
     const campgrnd = await camp.findByIdAndUpdate(req.params.id,{...req.body.campground})
     res.redirect(`/allcamp/${req.params.id}`)
 }))

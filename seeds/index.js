@@ -8,7 +8,7 @@ const path = require('path');
 const { deleteMany } = require('../models/campground');
 const camp = require('../models/campground');
 const campground = require('../models/campground');
-mongoose.connect('mongodb://localhost:27017/yelp',{
+mongoose.connect('mongodb+srv://nishanth:nish1234@cluster0.bbodeek.mongodb.net/yelpCamps',{
 useNewUrlParser: true,
 useUnifiedTopology: true
 });
