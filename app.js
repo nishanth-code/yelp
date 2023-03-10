@@ -33,10 +33,10 @@ const schemaValidator = (req,res,next) =>
 {
     
    
-    const { error } = campvalidation.validate()
+    const { error } = campvalidation.validate({})
     if(error)
     {
-        const msg = error.detail.map(el => el.message).join(',')
+        const msg = error.detail.map(el => el.message).join(' ')
         throw new ExpressError(msg,400)
     } else
      next();
@@ -77,8 +77,11 @@ app.all('*',(req,res,next) =>{
     next(new ExpressError('page not found',404));
 })
 app.use((err,req,res,next) =>{
-    const { message ='something went wrong' , statusCode =500}=err;
-    res.status(statusCode).render('campground/error');
+    const { statusCode = 500}=err;
+    if(!err.message){
+        err.message="oh no!, something went wrong"
+    }
+    res.status(statusCode).render('campground/error',{ err });
     
 
 })
