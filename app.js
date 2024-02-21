@@ -33,14 +33,15 @@ const schemaValidator = (req,res,next) =>
 {
     
    
-    const { error } = campvalidation.validate({})
+    const { error } = campvalidation.validate(req.body)
+    console.log(error)
     if(error)
     {
-        const msg = error.detail.map(el => el.message).join(' ')
+        const msg = error.details.map(el => el.message).join(' ')
         throw new ExpressError(msg,400)
-    } else
-     next();
-}
+    } else{next();
+    }}
+     
 app.get('/allcamp', async (req,res) =>{
     const campground = await camp.find({})
     res.render('campground/index' , { campground })
